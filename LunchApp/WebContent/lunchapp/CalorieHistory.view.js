@@ -30,12 +30,18 @@ sap.ui.jsview("lunchapp.CalorieHistory", {
 			path : "/", 
 			template : new sap.m.InputListItem({
 				label: "{Item}",
-				//content: "{Calories}",
-				content: new sap.m.Input({
+				content: [new sap.m.Input({
 					placeholder: 'Servings',
 					type :'Number',
 					value: '1'
-				})
+					}),
+					new sap.m.Input({
+						placeholder: 'Calories',
+						type: 'Number',
+						visible: false,
+						value : "{Calories}"
+					})
+				]
 			})
 		});
 		//console.log(inpList);

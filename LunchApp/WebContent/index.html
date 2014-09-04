@@ -19,6 +19,10 @@
 		sap.ui.getCore().AppContext.selItems = [];
 		var app = new sap.m.App({initialPage:"idHomeView"});
 		
+		jQuery.sap.require("jquery.sap.storage");  
+
+		var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);  
+
 		
 		var selectedItems;
 		
@@ -37,16 +41,36 @@
 		}
 		
 		var onPress2 = function(event){
-			alert('called');
 			var btnID = event.getSource().getId();
 			switch(btnID){
 			case 'saveB':
-				var storeItems = sap.ui.getCore().byId("sList").getSelectedItems();
-				console.log(sap.ui.getCore().byId("sList"));
-				console.log(storeItems);
+				var storeItems = sap.ui.getCore().byId("sList").getItems();
+				
+				//console.log(sap.ui.getCore().byId("sList"));
+				
+				var total = 0;
+				
+				for(var i=0;i<storeItems.length;i++){
+					var inp = storeItems[i].getContent();
+					var val = inp[0].getValue();
+					var cal = inp[1].getValue();
+					
+					total = parseInt(total) +(parseInt(val)*parseInt(cal));
+					
+					if(window.localStorage){
+						//oStorage.get("myDailyData");
+						
+						var myData = [];
+						var todayData = {'Date': new Date(), 'Total Calories': total};
+						oStorage.set('Today',todayData);
+						sap.m.MessageToast.show(" Saved "+total+' kCalories for today');		
+					}
+				}
+				
+				//console.log(storeItems);
 				break;
 			case 'cancelB':
-				
+				app.to(page);
 				break;
 			}
 		}
