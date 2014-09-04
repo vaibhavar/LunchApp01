@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+
+		<script src="resources/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m,sap.ui.ux3"
+				data-sap-ui-theme="sap_bluecrystal">
+		</script>
+		<!-- only load the mobile lib "sap.m" and the "sap_bluecrystal" theme -->
+
+		<script>
+		
+		sap.ui.localResources("lunchapp");
+		
+		sap.ui.getCore().AppContext = new Object();
+		sap.ui.getCore().AppContext.selItems = [];
+		var app = new sap.m.App({initialPage:"idHomeView"});
+		
+		
+		var selectedItems;
+		
+		
+		var onPress = function(event){
+				
+			var btnID = event.getSource().getId();
+				
+			switch(btnID){
+				
+					case 'recordBtn':
+					    sap.ui.getCore().AppContext.selItems = sap.ui.getCore().byId("lunchList").getSelectedItems();
+						app.to("CalorieHistory");
+					break;
+			}		
+		}
+		
+		var onPress2 = function(event){
+			alert('called');
+			var btnID = event.getSource().getId();
+			switch(btnID){
+			case 'saveB':
+				var storeItems = sap.ui.getCore().byId("sList").getSelectedItems();
+				console.log(sap.ui.getCore().byId("sList"));
+				console.log(storeItems);
+				break;
+			case 'cancelB':
+				
+				break;
+			}
+		}
+		
+		var page = sap.ui.view({id:"idHomeView", viewName:"lunchapp.HomeView", type:sap.ui.core.mvc.ViewType.JS});
+		var CalorieHistory = sap.ui.view("CalorieHistory",{id:"CalorieHistory", viewName:"lunchapp.CalorieHistory", type:sap.ui.core.mvc.ViewType.JS});
+		
+		
+		app.addPage(page);
+		app.addPage(CalorieHistory);
+		app.placeAt("content");
+		
+	
+				
+		</script>
+
+	</head>
+	<body class="sapUiBody" role="application">
+		<div id="content"></div>
+	</body>
+</html>
